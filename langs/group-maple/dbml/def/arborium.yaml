@@ -1,0 +1,22 @@
+repo: https://github.com/dynamotn/tree-sitter-dbml
+commit: 2e2fa5640268c33c3d3f27f7e676f631a9c68fd9
+license: MIT
+
+grammars:
+  - id: dbml
+    name: DBML
+    tag: data
+    tier: 4
+    icon: mdi:database-outline
+    aliases:
+      - database-markup-language
+
+    inventor: The Holistics team
+    year: 2018
+    description: "Database Markup Language is a DSL for defining database schemas in a simple, readable format."
+    link: https://dbml.dbdiagram.io/
+    trivia: "DBML grew out of dbdiagram.io after its creators sought a database-agnostic way to design schemas and visualize relationships."
+
+    samples:
+      - path: samples/ecommerce.dbml
+        description: Sample E-commerce database schema

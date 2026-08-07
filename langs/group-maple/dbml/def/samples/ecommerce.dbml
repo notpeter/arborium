@@ -1,0 +1,50 @@
+Project ecommerce {
+  database_type: 'PostgreSQL'
+  Note: 'A compact online store schema'
+}
+
+enum order_status {
+  pending
+  paid
+  shipped
+  cancelled [note: 'The order will not be fulfilled']
+}
+
+Table customers {
+  id bigint [pk, increment]
+  email varchar [not null, unique]
+  display_name varchar [not null]
+  created_at timestamp [default: `now()`]
+
+  indexes {
+    email [unique]
+    created_at [name: 'customers_created_at']
+  }
+}
+
+Table orders as O {
+  id bigint [pk, increment]
+  customer_id bigint [not null]
+  status order_status [not null, default: 'pending']
+  total_cents integer [not null, default: 0]
+  placed_at timestamp [default: `now()`]
+
+  indexes {
+    customer_id
+    (customer_id, placed_at) [name: 'customer_orders']
+  }
+}
+
+Table order_items {
+  order_id bigint [not null]
+  product_code varchar [not null]
+  quantity integer [not null, default: 1]
+  unit_price_cents integer [not null]
+
+  indexes {
+    (order_id, product_code) [unique]
+  }
+}
+
+Ref: public.orders.customer_id > public.customers.id
+Ref: public.order_items.order_id > public.orders.id
